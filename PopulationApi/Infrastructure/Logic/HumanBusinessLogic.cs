@@ -22,6 +22,7 @@ public class HumanBusinessLogic : IHumanBusinessLogic
 
     public async Task<HumanDomainModel> UpdateAsync(Guid id, HumanDomainModel model)
     {
+        ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
         return await _repository.UpdateAsync(id, model).ConfigureAwait(false);
@@ -37,7 +38,7 @@ public class HumanBusinessLogic : IHumanBusinessLogic
         return await _repository.GetByIdAsync(id).ConfigureAwait(false);
     }
 
-    public async Task<List<HumanDomainModel>> GetAllPeople()
+    public async Task<List<HumanDomainModel>> GetAllPeopleAsync()
     {
         return await _repository.GetAllAsync().ConfigureAwait(false);
     }

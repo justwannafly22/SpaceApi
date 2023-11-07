@@ -22,6 +22,7 @@ public class CountryBusinessLogic : ICountryBusinessLogic
     
     public async Task<CountryDomainModel> UpdateAsync(Guid id, CountryDomainModel model)
     {
+        ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
         return await _repository.UpdateAsync(id, model).ConfigureAwait(false);

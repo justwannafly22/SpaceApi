@@ -76,6 +76,7 @@ public class CountryRepository : ICountryRepository
 
     public async Task<CountryDomainModel> UpdateAsync(Guid id, CountryDomainModel model)
     {
+        ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
         var entity = await GetCountryByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync().ConfigureAwait(false);

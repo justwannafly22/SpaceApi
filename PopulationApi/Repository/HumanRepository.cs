@@ -76,6 +76,7 @@ public class HumanRepository : IHumanRepository
 
     public async Task<HumanDomainModel> UpdateAsync(Guid id, HumanDomainModel model)
     {
+        ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
         var entity = await GetHumanByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync().ConfigureAwait(false);

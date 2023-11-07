@@ -30,7 +30,7 @@ public class HumanController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var response = _mapper.Map<List<HumanResponseModel>>(await _humanBusinessLogic.GetAllPeople().ConfigureAwait(false));
+        var response = _mapper.Map<List<HumanResponseModel>>(await _humanBusinessLogic.GetAllPeopleAsync().ConfigureAwait(false));
 
         return Ok(response);
     }
