@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulationApi", "PopulationApi.csproj", "{FF71C43E-A4F6-45A4-A383-76AF99C37B23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarthApi", "..\EarthApi\EarthApi.csproj", "{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF71C43E-A4F6-45A4-A383-76AF99C37B23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF71C43E-A4F6-45A4-A383-76AF99C37B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF71C43E-A4F6-45A4-A383-76AF99C37B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF71C43E-A4F6-45A4-A383-76AF99C37B23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CABE7530-17E0-4085-B39A-F9F435758C9F}
+	EndGlobalSection
+EndGlobal
