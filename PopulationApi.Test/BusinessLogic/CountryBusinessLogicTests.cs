@@ -1,12 +1,8 @@
-﻿using AutoFixture;
-using FluentAssertions;
-using FluentAssertions.Execution;
-using MinimalApi.Domain;
+﻿using MinimalApi.Domain;
 using MinimalApi.Infrastructure.Exceptions;
 using MinimalApi.Infrastructure.Logic;
 using MinimalApi.Infrastructure.Logic.Interfaces;
 using MinimalApi.Repository.Interfaces;
-using Moq;
 
 namespace PopulationApi.Test.BusinessLogic;
 
@@ -14,8 +10,8 @@ public class CountryBusinessLogicTests
 {
     private readonly ICountryBusinessLogic _countryBusinessLogic;
     private readonly Mock<ICountryRepository> _mockCountryRepository;
-    private static readonly Fixture Fixture = new Fixture();
-    private readonly Guid Id = new Guid();
+    private static readonly Fixture Fixture = new();
+    private readonly Guid Id = Guid.NewGuid();
     private const int _countryCount = 5;
 
     public CountryBusinessLogicTests()
