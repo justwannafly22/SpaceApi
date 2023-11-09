@@ -26,61 +26,9 @@ public class CountryControllerTests
         _countryController = new CountryController(_mockCountryBusinessLogic.Object, _mockMapper.Object);
     }
 
-    private static List<CountryDomainModel> TestCountries()
+    public static List<CountryDomainModel> TestCountries()
     {
         return Fixture.CreateMany<CountryDomainModel>(_countryCount).ToList();
-    }
-
-    private static CountryResponseModel ConvertToResponseCountry(CountryDomainModel domainModel)
-    {
-        return new CountryResponseModel
-        {
-            Id = domainModel.Id,
-            Name = domainModel.Name,
-            Population = domainModel.Population,
-            Square = domainModel.Square
-        };
-    }
-
-    private static List<CountryResponseModel> ConvertToResponseCountries(List<CountryDomainModel> countries)
-    {
-        var responseModels = new List<CountryResponseModel>(_countryCount);
-        countries.ForEach(country =>
-        {
-            var responseModel = new CountryResponseModel
-            {
-                Id = country.Id,
-                Name = country.Name,
-                Population = country.Population,
-                Square = country.Square
-            };
-
-            responseModels.Add(responseModel);
-        });
-
-        return responseModels;
-    }
-
-    private static CountryDomainModel ConvertToDomainModel(CountryCreateRequestModel requestModel)
-    {
-        return new CountryDomainModel
-        {
-            Id = Guid.NewGuid(),
-            Name = requestModel.Name,
-            Population = requestModel.Population,
-            Square = requestModel.Square
-        };
-    }
-    
-    private static CountryDomainModel ConvertToDomainModel(CountryUpdateRequestModel requestModel)
-    {
-        return new CountryDomainModel
-        {
-            Id = Guid.NewGuid(),
-            Name = requestModel.Name,
-            Population = requestModel.Population,
-            Square = requestModel.Square
-        };
     }
 
     #region GetAll
@@ -89,7 +37,7 @@ public class CountryControllerTests
     {
         // Arrange
         var tempCountries = TestCountries();
-        var responseModels = ConvertToResponseCountries(tempCountries);
+        var responseModels = CountryControllerTestsExtensions.ConvertToResponseCountries(tempCountries, tempCountries.Count);
         _mockCountryBusinessLogic.Setup(_ => _.GetAllCountriesAsync()).ReturnsAsync(tempCountries);
         _mockMapper.Setup(_ => _.Map<List<CountryResponseModel>>(It.IsAny<List<CountryDomainModel>>())).Returns(responseModels);
 
@@ -120,7 +68,7 @@ public class CountryControllerTests
     {
         // Arrange
         var tempCountries = new List<CountryDomainModel>();
-        var responseModels = ConvertToResponseCountries(tempCountries);
+        var responseModels = CountryControllerTestsExtensions.ConvertToResponseCountries(tempCountries, tempCountries.Count);
         _mockCountryBusinessLogic.Setup(_ => _.GetAllCountriesAsync()).ReturnsAsync(tempCountries);
         _mockMapper.Setup(_ => _.Map<List<CountryResponseModel>>(It.IsAny<List<CountryDomainModel>>())).Returns(responseModels);
 
@@ -153,7 +101,7 @@ public class CountryControllerTests
     {
         // Arrange
         var domainModel = Fixture.Create<CountryDomainModel>();
-        var responseModel = ConvertToResponseCountry(domainModel);
+        var responseModel = CountryControllerTestsExtensions.ConvertToResponseCountry(domainModel);
         _mockCountryBusinessLogic.Setup(_ => _.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(domainModel);
         _mockMapper.Setup(_ => _.Map<CountryResponseModel>(It.IsAny<CountryDomainModel>())).Returns(responseModel);
 
@@ -251,8 +199,8 @@ public class CountryControllerTests
     {
         // Arrange
         var requestModel = Fixture.Create<CountryCreateRequestModel>();
-        var domainModel = ConvertToDomainModel(requestModel);
-        var responseModel = ConvertToResponseCountry(domainModel);
+        var domainModel = CountryControllerTestsExtensions.ConvertToDomainModel(requestModel);
+        var responseModel = CountryControllerTestsExtensions.ConvertToResponseCountry(domainModel);
         _mockCountryBusinessLogic.Setup(_ => _.CreateAsync(It.IsAny<CountryDomainModel>())).ReturnsAsync(domainModel);
         _mockMapper.Setup(_ => _.Map<CountryResponseModel>(It.IsAny<CountryDomainModel>())).Returns(responseModel);
         _mockMapper.Setup(_ => _.Map<CountryDomainModel>(It.IsAny<CountryCreateRequestModel>())).Returns(domainModel);
@@ -307,8 +255,8 @@ public class CountryControllerTests
     {
         // Arrange
         var requestModel = Fixture.Create<CountryUpdateRequestModel>();
-        var domainModel = ConvertToDomainModel(requestModel);
-        var responseModel = ConvertToResponseCountry(domainModel);
+        var domainModel = CountryControllerTestsExtensions.ConvertToDomainModel(requestModel);
+        var responseModel = CountryControllerTestsExtensions.ConvertToResponseCountry(domainModel);
         _mockCountryBusinessLogic.Setup(_ => _.UpdateAsync(It.IsAny<Guid>(), It.IsAny<CountryDomainModel>())).ReturnsAsync(domainModel);
         _mockMapper.Setup(_ => _.Map<CountryResponseModel>(It.IsAny<CountryDomainModel>())).Returns(responseModel);
         _mockMapper.Setup(_ => _.Map<CountryDomainModel>(It.IsAny<CountryUpdateRequestModel>())).Returns(domainModel);
@@ -372,4 +320,59 @@ public class CountryControllerTests
         }
     }
     #endregion
+}
+
+internal static class CountryControllerTestsExtensions
+{
+    public static CountryResponseModel ConvertToResponseCountry(CountryDomainModel domainModel)
+    {
+        return new CountryResponseModel
+        {
+            Id = domainModel.Id,
+            Name = domainModel.Name,
+            Population = domainModel.Population,
+            Square = domainModel.Square
+        };
+    }
+
+    public static List<CountryResponseModel> ConvertToResponseCountries(List<CountryDomainModel> countries, int count)
+    {
+        var responseModels = new List<CountryResponseModel>(count);
+        countries.ForEach(country =>
+        {
+            var responseModel = new CountryResponseModel
+            {
+                Id = country.Id,
+                Name = country.Name,
+                Population = country.Population,
+                Square = country.Square
+            };
+
+            responseModels.Add(responseModel);
+        });
+
+        return responseModels;
+    }
+
+    public static CountryDomainModel ConvertToDomainModel(CountryCreateRequestModel requestModel)
+    {
+        return new CountryDomainModel
+        {
+            Id = Guid.NewGuid(),
+            Name = requestModel.Name,
+            Population = requestModel.Population,
+            Square = requestModel.Square
+        };
+    }
+
+    public static CountryDomainModel ConvertToDomainModel(CountryUpdateRequestModel requestModel)
+    {
+        return new CountryDomainModel
+        {
+            Id = Guid.NewGuid(),
+            Name = requestModel.Name,
+            Population = requestModel.Population,
+            Square = requestModel.Square
+        };
+    }
 }

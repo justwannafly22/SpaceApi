@@ -31,73 +31,13 @@ public class HumanControllerTests
         return Fixture.CreateMany<HumanDomainModel>(_humanCount).ToList();
     }
 
-    private static HumanResponseModel ConvertToResponseHuman(HumanDomainModel domainModel)
-    {
-        return new HumanResponseModel
-        {
-            Id = domainModel.Id,
-            Name = domainModel.Name,
-            Age = domainModel.Age,
-            Gender = domainModel.Gender,
-            Surname = domainModel.Surname,
-            CountryId = (Guid)domainModel.CountryId!
-        };
-    }
-
-    private static List<HumanResponseModel> ConvertToResponsePeople(List<HumanDomainModel> people)
-    {
-        var responseModels = new List<HumanResponseModel>(_humanCount);
-        people.ForEach(human =>
-        {
-            var responseModel = new HumanResponseModel
-            {
-                Id = human.Id,
-                Name = human.Name,
-                Age = human.Age,
-                Gender = human.Gender,
-                Surname = human.Surname,
-                CountryId = (Guid)human.CountryId!
-            };
-
-            responseModels.Add(responseModel);
-        });
-
-        return responseModels;
-    }
-
-    private static HumanDomainModel ConvertToDomainModel(HumanCreateRequestModel requestModel)
-    {
-        return new HumanDomainModel
-        {
-            Id = Guid.NewGuid(),
-            Name = requestModel.Name,
-            Age = requestModel.Age,
-            Gender = requestModel.Gender,
-            Surname = requestModel.Surname,
-            CountryId = (Guid)requestModel.CountryId
-        };
-    }
-
-    private static HumanDomainModel ConvertToDomainModel(HumanUpdateRequestModel requestModel)
-    {
-        return new HumanDomainModel
-        {
-            Id = Guid.NewGuid(),
-            Name = requestModel.Name,
-            Age = requestModel.Age,
-            Gender = requestModel.Gender,
-            Surname = requestModel.Surname,
-            CountryId = (Guid)requestModel.CountryId
-        };
-    }
-
     #region GetAll
     [Fact]
     public async Task GetAll_ThereArePeople_ReturnsPeople()
     {
         // Arrange
         var tempPeople = TestPeople();
-        var responseModels = ConvertToResponsePeople(tempPeople);
+        var responseModels = HumanControllerTestsExtensions.ConvertToResponsePeople(tempPeople, tempPeople.Count);
         _mockHumanBusinessLogic.Setup(_ => _.GetAllPeopleAsync()).ReturnsAsync(tempPeople);
         _mockMapper.Setup(_ => _.Map<List<HumanResponseModel>>(It.IsAny<List<HumanDomainModel>>())).Returns(responseModels);
 
@@ -128,7 +68,7 @@ public class HumanControllerTests
     {
         // Arrange
         var tempPeople = new List<HumanDomainModel>();
-        var responseModels = ConvertToResponsePeople(tempPeople);
+        var responseModels = HumanControllerTestsExtensions.ConvertToResponsePeople(tempPeople, tempPeople.Count);
         _mockHumanBusinessLogic.Setup(_ => _.GetAllPeopleAsync()).ReturnsAsync(tempPeople);
         _mockMapper.Setup(_ => _.Map<List<HumanResponseModel>>(It.IsAny<List<HumanDomainModel>>())).Returns(responseModels);
 
@@ -161,7 +101,7 @@ public class HumanControllerTests
     {
         // Arrange
         var domainModel = Fixture.Create<HumanDomainModel>();
-        var responseModel = ConvertToResponseHuman(domainModel);
+        var responseModel = HumanControllerTestsExtensions.ConvertToResponseHuman(domainModel);
         _mockHumanBusinessLogic.Setup(_ => _.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(domainModel);
         _mockMapper.Setup(_ => _.Map<HumanResponseModel>(It.IsAny<HumanDomainModel>())).Returns(responseModel);
 
@@ -259,8 +199,8 @@ public class HumanControllerTests
     {
         // Arrange
         var requestModel = Fixture.Create<HumanCreateRequestModel>();
-        var domainModel = ConvertToDomainModel(requestModel);
-        var responseModel = ConvertToResponseHuman(domainModel);
+        var domainModel = HumanControllerTestsExtensions.ConvertToDomainModel(requestModel);
+        var responseModel = HumanControllerTestsExtensions.ConvertToResponseHuman(domainModel);
         _mockHumanBusinessLogic.Setup(_ => _.CreateAsync(It.IsAny<HumanDomainModel>())).ReturnsAsync(domainModel);
         _mockMapper.Setup(_ => _.Map<HumanResponseModel>(It.IsAny<HumanDomainModel>())).Returns(responseModel);
         _mockMapper.Setup(_ => _.Map<HumanDomainModel>(It.IsAny<HumanCreateRequestModel>())).Returns(domainModel);
@@ -315,8 +255,8 @@ public class HumanControllerTests
     {
         // Arrange
         var requestModel = Fixture.Create<HumanUpdateRequestModel>();
-        var domainModel = ConvertToDomainModel(requestModel);
-        var responseModel = ConvertToResponseHuman(domainModel);
+        var domainModel = HumanControllerTestsExtensions.ConvertToDomainModel(requestModel);
+        var responseModel = HumanControllerTestsExtensions.ConvertToResponseHuman(domainModel);
         _mockHumanBusinessLogic.Setup(_ => _.UpdateAsync(It.IsAny<Guid>(), It.IsAny<HumanDomainModel>())).ReturnsAsync(domainModel);
         _mockMapper.Setup(_ => _.Map<HumanResponseModel>(It.IsAny<HumanDomainModel>())).Returns(responseModel);
         _mockMapper.Setup(_ => _.Map<HumanDomainModel>(It.IsAny<HumanUpdateRequestModel>())).Returns(domainModel);
@@ -380,4 +320,67 @@ public class HumanControllerTests
         }
     }
     #endregion
+}
+
+internal static class HumanControllerTestsExtensions
+{
+    public static HumanResponseModel ConvertToResponseHuman(HumanDomainModel domainModel)
+    {
+        return new HumanResponseModel
+        {
+            Id = domainModel.Id,
+            Name = domainModel.Name,
+            Age = domainModel.Age,
+            Gender = domainModel.Gender,
+            Surname = domainModel.Surname,
+            CountryId = (Guid)domainModel.CountryId!
+        };
+    }
+
+    public static List<HumanResponseModel> ConvertToResponsePeople(List<HumanDomainModel> people, int count)
+    {
+        var responseModels = new List<HumanResponseModel>(count);
+        people.ForEach(human =>
+        {
+            var responseModel = new HumanResponseModel
+            {
+                Id = human.Id,
+                Name = human.Name,
+                Age = human.Age,
+                Gender = human.Gender,
+                Surname = human.Surname,
+                CountryId = (Guid)human.CountryId!
+            };
+
+            responseModels.Add(responseModel);
+        });
+
+        return responseModels;
+    }
+
+    public static HumanDomainModel ConvertToDomainModel(HumanCreateRequestModel requestModel)
+    {
+        return new HumanDomainModel
+        {
+            Id = Guid.NewGuid(),
+            Name = requestModel.Name,
+            Age = requestModel.Age,
+            Gender = requestModel.Gender,
+            Surname = requestModel.Surname,
+            CountryId = (Guid)requestModel.CountryId
+        };
+    }
+
+    public static HumanDomainModel ConvertToDomainModel(HumanUpdateRequestModel requestModel)
+    {
+        return new HumanDomainModel
+        {
+            Id = Guid.NewGuid(),
+            Name = requestModel.Name,
+            Age = requestModel.Age,
+            Gender = requestModel.Gender,
+            Surname = requestModel.Surname,
+            CountryId = (Guid)requestModel.CountryId
+        };
+    }
 }
