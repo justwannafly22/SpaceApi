@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MinimalApi.Boundary.Country;
+using MinimalApi.Boundary.Country.RequestModels;
 using MinimalApi.Controllers;
 using MinimalApi.Domain;
 using MinimalApi.Infrastructure.Exceptions;
@@ -58,6 +59,28 @@ public class CountryControllerTests
         });
 
         return responseModels;
+    }
+
+    private static CountryDomainModel ConvertToDomainModel(CountryCreateRequestModel requestModel)
+    {
+        return new CountryDomainModel
+        {
+            Id = Guid.NewGuid(),
+            Name = requestModel.Name,
+            Population = requestModel.Population,
+            Square = requestModel.Square
+        };
+    }
+    
+    private static CountryDomainModel ConvertToDomainModel(CountryUpdateRequestModel requestModel)
+    {
+        return new CountryDomainModel
+        {
+            Id = Guid.NewGuid(),
+            Name = requestModel.Name,
+            Population = requestModel.Population,
+            Square = requestModel.Square
+        };
     }
 
     #region GetAll
@@ -222,5 +245,131 @@ public class CountryControllerTests
     }
     #endregion
 
+    #region Create
+    [Fact]
+    public async Task Create_ValidModel_ReturnsCountry()
+    {
+        // Arrange
+        var requestModel = Fixture.Create<CountryCreateRequestModel>();
+        var domainModel = ConvertToDomainModel(requestModel);
+        var responseModel = ConvertToResponseCountry(domainModel);
+        _mockCountryBusinessLogic.Setup(_ => _.CreateAsync(It.IsAny<CountryDomainModel>())).ReturnsAsync(domainModel);
+        _mockMapper.Setup(_ => _.Map<CountryResponseModel>(It.IsAny<CountryDomainModel>())).Returns(responseModel);
+        _mockMapper.Setup(_ => _.Map<CountryDomainModel>(It.IsAny<CountryCreateRequestModel>())).Returns(domainModel);
 
+        // Act
+        var response = await _countryController.Create(requestModel);
+
+        // Assert
+        using (var scope = new AssertionScope())
+        {
+            response.Should().NotBeNull();
+
+            var createdAtActionResult = response as CreatedAtActionResult;
+            createdAtActionResult.Should().NotBeNull();
+            createdAtActionResult!.StatusCode.Should().Be((int)HttpStatusCode.Created);
+            createdAtActionResult!.Value.Should().NotBeNull();
+
+            var responseValue = createdAtActionResult.Value;
+            var county = responseValue as CountryResponseModel;
+
+            county.Should().NotBeNull();
+            county.Should().BeEquivalentTo(responseModel);
+        }
+    }
+
+    [Fact]
+    public async Task Create_InvalidModel_ReturnsBadRequest()
+    {
+        // Arrange
+        var requestModel = Fixture.Create<CountryCreateRequestModel>();
+        _countryController.ModelState.AddModelError("Bad request error", "Model is invalid");
+
+        // Act
+        var response = await _countryController.Create(requestModel);
+
+        // Assert
+        using (var scope = new AssertionScope())
+        {
+            response.Should().NotBeNull();
+
+            var badRequestObjectResult = response as BadRequestObjectResult;
+            badRequestObjectResult.Should().NotBeNull();
+            badRequestObjectResult!.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
+            badRequestObjectResult!.Value.Should().NotBeNull();
+        }
+    }
+    #endregion
+
+    #region Update
+    [Fact]
+    public async Task Update_ValidModel_ReturnsNoContent()
+    {
+        // Arrange
+        var requestModel = Fixture.Create<CountryUpdateRequestModel>();
+        var domainModel = ConvertToDomainModel(requestModel);
+        var responseModel = ConvertToResponseCountry(domainModel);
+        _mockCountryBusinessLogic.Setup(_ => _.UpdateAsync(It.IsAny<Guid>(), It.IsAny<CountryDomainModel>())).ReturnsAsync(domainModel);
+        _mockMapper.Setup(_ => _.Map<CountryResponseModel>(It.IsAny<CountryDomainModel>())).Returns(responseModel);
+        _mockMapper.Setup(_ => _.Map<CountryDomainModel>(It.IsAny<CountryUpdateRequestModel>())).Returns(domainModel);
+
+        // Act
+        var response = await _countryController.Update(domainModel.Id, requestModel);
+
+        // Assert
+        using (var scope = new AssertionScope())
+        {
+            response.Should().NotBeNull();
+
+            var noContentResult = response as NoContentResult;
+            noContentResult.Should().NotBeNull();
+            noContentResult!.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+        }
+    }
+
+    [Fact]
+    public async Task Update_InvalidModel_ReturnsBadRequest()
+    {
+        // Arrange
+        var requestModel = Fixture.Create<CountryUpdateRequestModel>();
+        _countryController.ModelState.AddModelError("Bad request error", "Model is invalid");
+
+        // Act
+        var response = await _countryController.Update(Id, requestModel);
+
+        // Assert
+        using (var scope = new AssertionScope())
+        {
+            response.Should().NotBeNull();
+
+            var badRequestObjectResult = response as BadRequestObjectResult;
+            badRequestObjectResult.Should().NotBeNull();
+            badRequestObjectResult!.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
+            badRequestObjectResult!.Value.Should().NotBeNull();
+        }
+    }
+
+    [Fact]
+    public async Task Update_NonExistCountry_ReturnsNotFound()
+    {
+        // Arrange
+        var requestModel = Fixture.Create<CountryUpdateRequestModel>();
+        _mockCountryBusinessLogic.Setup(_ => _.UpdateAsync(It.IsAny<Guid>(), It.IsAny<CountryDomainModel>())).ThrowsAsync(new NotFoundException());
+
+        // Act
+        var response = await _countryController.Update(Id, requestModel);
+
+        // Assert
+        using (var scope = new AssertionScope())
+        {
+            response.Should().NotBeNull();
+
+            var notFoundObjectResult = response as NotFoundObjectResult;
+            notFoundObjectResult.Should().NotBeNull();
+            notFoundObjectResult!.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+            notFoundObjectResult!.Value.Should().NotBeNull();
+            notFoundObjectResult!.Value.Should().BeEquivalentTo(new Tuple<string, HttpStatusCode>($"Country with id: {Id} doesn`t exist in the database.", HttpStatusCode.NotFound));
+        }
+    }
+    #endregion
 }
