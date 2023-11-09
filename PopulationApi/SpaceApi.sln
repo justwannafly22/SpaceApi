@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulationApi", "Population
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarthApi", "..\EarthApi\EarthApi.csproj", "{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6B78F5E5-7E9F-4A7D-943C-4B6E8254480A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulationApi.Test", "..\PopulationApi.Test\PopulationApi.Test.csproj", "{072B1408-6F28-41E9-AD2E-D77EAAA8C243}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{072B1408-6F28-41E9-AD2E-D77EAAA8C243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{072B1408-6F28-41E9-AD2E-D77EAAA8C243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{072B1408-6F28-41E9-AD2E-D77EAAA8C243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{072B1408-6F28-41E9-AD2E-D77EAAA8C243}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{072B1408-6F28-41E9-AD2E-D77EAAA8C243} = {6B78F5E5-7E9F-4A7D-943C-4B6E8254480A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CABE7530-17E0-4085-B39A-F9F435758C9F}

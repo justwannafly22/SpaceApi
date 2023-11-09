@@ -1,0 +1,107 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MinimalApi.Domain;
+using MinimalApi.Infrastructure.Exceptions;
+using MinimalApi.Infrastructure.Factories.Interfaces;
+using MinimalApi.Repository.Entities;
+using MinimalApi.Repository.Interfaces;
+using Serilog;
+using System.Linq.Expressions;
+
+namespace MinimalApi.Repository;
+
+public class HumanRepository : IHumanRepository
+{
+    private readonly AppDbContext _context;
+    private readonly IHumanRepositoryFactory _factory;
+
+    public HumanRepository(AppDbContext context, IHumanRepositoryFactory factory)
+    {
+        _context = context;
+        _factory = factory;
+    }
+
+    public async Task<HumanDomainModel> CreateAsync(HumanDomainModel model)
+    {
+        ArgumentNullException.ThrowIfNull(model, nameof(model));
+
+        var entity = _factory.ToEntity(model);
+        await _context.People.AddAsync(entity).ConfigureAwait(false);
+        await _context.SaveChangesAsync().ConfigureAwait(false);
+
+        Log.Information($"The human: {entity} was successfully created.");
+
+        return _factory.ToDomain(entity);
+    }
+
+    public async Task DeleteAsync(Guid? id)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
+
+        var entity = await GetHumanByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync().ConfigureAwait(false);
+        if (entity is null)
+        {
+            Log.Warning($"The human with id {id} doesn`t exist in the database.");
+            throw new NotFoundException($"The human with id {id} doesn`t exist in the database.");
+        }
+
+        _context.Remove(entity!);
+
+        await _context.SaveChangesAsync().ConfigureAwait(false);
+
+        Log.Information($"The human: {entity} was successfully deleted.");
+    }
+
+    public async Task<List<HumanDomainModel>> GetAllAsync()
+    {
+        var entities = await GetAllCountries().Select(e => _factory.ToDomain(e)).AsNoTracking().ToListAsync().ConfigureAwait(false);
+
+        Log.Information($"The human table was triggered.");
+
+        return entities;
+    }
+
+    public async Task<HumanDomainModel> GetByIdAsync(Guid? id)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
+
+        var entity = await GetHumanByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync().ConfigureAwait(false);
+        if (entity is null)
+        {
+            Log.Warning($"The human with id {id} doesn`t exist in the database.");
+            throw new NotFoundException($"The human with id {id} doesn`t exist in the database.");
+        }
+
+        return _factory.ToDomain(entity!);
+    }
+
+    public async Task<HumanDomainModel> UpdateAsync(Guid id, HumanDomainModel model)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
+        ArgumentNullException.ThrowIfNull(model, nameof(model));
+
+        var entity = await GetHumanByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync().ConfigureAwait(false);
+        if (entity is null)
+        {
+            Log.Warning($"The human with id {id} doesn`t exist in the database.");
+            throw new NotFoundException($"The human with id {id} doesn`t exist in the database.");
+        }
+
+        entity.Name = model.Name;
+        entity.Surname = model.Surname;
+        entity.Age = model.Age;
+        entity.Gender = model.Gender;
+
+        await _context.SaveChangesAsync().ConfigureAwait(false);
+
+        Log.Information($"The human: {entity} was successfully updated.");
+
+        return _factory.ToDomain(entity);
+    }
+
+    private IQueryable<Human> GetAllCountries() =>
+        _context.Set<Human>();
+
+    private IQueryable<Human> GetHumanByExpression(Expression<Func<Human, bool>> expression) =>
+        _context.Set<Human>()
+                .Where(expression);
+}
