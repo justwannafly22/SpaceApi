@@ -1,6 +1,6 @@
-﻿using MinimalApi.Domain;
+﻿using PopulationApi.Domain;
 
-namespace MinimalApi.Repository.Interfaces;
+namespace PopulationApi.Repository.Interfaces;
 
 public interface IHumanRepository
 {

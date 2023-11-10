@@ -1,10 +1,10 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using MinimalApi.Infrastructure;
-using MinimalApi.Infrastructure.Extentions;
-using MinimalApi.Infrastructure.Middleware;
-using MinimalApi.Repository;
+using PopulationApi.Infrastructure;
+using PopulationApi.Infrastructure.Extentions;
+using PopulationApi.Infrastructure.Middleware;
+using PopulationApi.Repository;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()

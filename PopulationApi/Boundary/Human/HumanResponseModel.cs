@@ -1,4 +1,4 @@
-﻿namespace MinimalApi.Boundary.Human;
+﻿namespace PopulationApi.Boundary.Human;
 
 public class HumanResponseModel
 {

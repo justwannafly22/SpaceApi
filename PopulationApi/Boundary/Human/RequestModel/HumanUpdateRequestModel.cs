@@ -1,4 +1,4 @@
-﻿namespace MinimalApi.Boundary.Human.RequestModel;
+﻿namespace PopulationApi.Boundary.Human.RequestModel;
 
 public class HumanUpdateRequestModel
 {

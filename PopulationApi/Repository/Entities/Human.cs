@@ -1,4 +1,4 @@
-﻿namespace MinimalApi.Repository.Entities;
+﻿namespace PopulationApi.Repository.Entities;
 
 public class Human
 {

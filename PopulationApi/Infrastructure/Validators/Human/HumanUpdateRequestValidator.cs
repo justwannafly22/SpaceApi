@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using MinimalApi.Boundary.Human.RequestModel;
+using PopulationApi.Boundary.Human.RequestModel;
 
-namespace MinimalApi.Infrastructure.Validators.Human;
+namespace PopulationApi.Infrastructure.Validators.Human;
 
 public class HumanUpdateRequestModelValidator : AbstractValidator<HumanUpdateRequestModel>
 {

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MinimalApi.Boundary;
-using MinimalApi.Boundary.Human;
-using MinimalApi.Boundary.Human.RequestModel;
-using MinimalApi.Domain;
-using MinimalApi.Infrastructure.Exceptions;
-using MinimalApi.Infrastructure.Logic.Interfaces;
+using PopulationApi.Boundary;
+using PopulationApi.Boundary.Human;
+using PopulationApi.Boundary.Human.RequestModel;
+using PopulationApi.Domain;
+using PopulationApi.Infrastructure.Exceptions;
+using PopulationApi.Infrastructure.Logic.Interfaces;
 using System.Net;
 
-namespace MinimalApi.Controllers;
+namespace PopulationApi.Controllers;
 
 [ApiController]
 [Route("api/v1/people")]

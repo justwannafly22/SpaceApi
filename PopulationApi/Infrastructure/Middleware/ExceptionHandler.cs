@@ -1,8 +1,8 @@
-﻿using MinimalApi.Boundary;
+﻿using PopulationApi.Boundary;
 using Serilog;
 using System.Net;
 
-namespace MinimalApi.Infrastructure.Middleware;
+namespace PopulationApi.Infrastructure.Middleware;
 
 public class ExceptionHandler
 {

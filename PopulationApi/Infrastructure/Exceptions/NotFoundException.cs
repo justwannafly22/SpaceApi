@@ -1,4 +1,4 @@
-﻿namespace MinimalApi.Infrastructure.Exceptions;
+﻿namespace PopulationApi.Infrastructure.Exceptions;
 
 public class NotFoundException : Exception
 {

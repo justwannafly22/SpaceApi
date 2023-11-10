@@ -1,8 +1,8 @@
-﻿using MinimalApi.Domain;
-using MinimalApi.Infrastructure.Exceptions;
-using MinimalApi.Infrastructure.Logic;
-using MinimalApi.Infrastructure.Logic.Interfaces;
-using MinimalApi.Repository.Interfaces;
+﻿using PopulationApi.Domain;
+using PopulationApi.Infrastructure.Exceptions;
+using PopulationApi.Infrastructure.Logic;
+using PopulationApi.Infrastructure.Logic.Interfaces;
+using PopulationApi.Repository.Interfaces;
 
 namespace PopulationApi.Test.BusinessLogic;
 
