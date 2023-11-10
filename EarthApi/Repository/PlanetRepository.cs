@@ -36,7 +36,7 @@ public class PlanetRepository : IPlanetRepository
         var planet = _planetFactory.ToEntity(domainModel);
 
         using var connection = _context.CreateConnection();
-        await connection.ExecuteAsync(SP_CreatePlanet, new
+        var affectedRows = await connection.ExecuteAsync(SP_CreatePlanet, new
         {
             planet.Name,
             planet.Location,
@@ -44,7 +44,15 @@ public class PlanetRepository : IPlanetRepository
             planet.Air
         }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
 
+        if (affectedRows == 0)
+        {
+            _logger.LogError("Planet wasn`t created.");
+            throw new Exception("Planet wasn`t created.");
+        }
+
         var insertedPlanet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanetByName, new { planet.Name }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+
+        _logger.LogInfo($"The planet: {planet.Name} created successfully.");
 
         return _planetFactory.ToDomain(insertedPlanet!);
     }
