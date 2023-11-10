@@ -44,7 +44,7 @@ public class PlanetRepository : IPlanetRepository
             planet.Air
         }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
 
-        var insertedPlanet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanetByName, planet.Name, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        var insertedPlanet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanetByName, new { planet.Name }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
 
         return _planetFactory.ToDomain(insertedPlanet!);
     }
@@ -77,7 +77,7 @@ public class PlanetRepository : IPlanetRepository
     public async Task DeleteAsync(Guid id)
     {
         using var connection = _context.CreateConnection();
-        var rowsAffected = await connection.ExecuteAsync(SP_DeletePlanet, id, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        var rowsAffected = await connection.ExecuteAsync(SP_DeletePlanet, new { id }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
 
         if (rowsAffected == 0)
         {
@@ -99,7 +99,7 @@ public class PlanetRepository : IPlanetRepository
     {
         using var connection = _context.CreateConnection();
 
-        var planet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanet, id, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        var planet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanet, new { id }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
         if (planet is null)
         {
             _logger.LogWarn($"The planet with id: {id} doesn`t exist in the database.");

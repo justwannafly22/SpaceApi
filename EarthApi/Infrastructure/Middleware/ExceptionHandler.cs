@@ -3,7 +3,7 @@ using PlanetApi.Infrastructure.Exceptions;
 using PlanetApi.Infrastructure.Logger;
 using System.Net;
 
-namespace MinimalApi.Infrastructure.Middleware;
+namespace PopulationApi.Infrastructure.Middleware;
 
 public class ExceptionHandler
 {
