@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using MinimalApi.Boundary;
+using Serilog;
 using System.Net;
 
 namespace MinimalApi.Infrastructure.Middleware;
@@ -32,15 +33,19 @@ public class ExceptionHandler
         }
     }
 
-    private async Task HandleExceptionAsync(HttpContext httpContext, string message, HttpStatusCode code)
+    private async Task HandleExceptionAsync(HttpContext httpContext, string message, HttpStatusCode statusCode)
     {
         Log.Error(message, "Error occured - ");
 
         var response = httpContext.Response;
 
         response.ContentType = "application/json";
-        response.StatusCode = (int)code;
+        response.StatusCode = (int)statusCode;
 
-        await response.WriteAsync(new { Message = message, Code = code }.ToString());
+        await response.WriteAsync(new BaseResponseModel
+        { 
+            Message = message,
+            StatusCode = statusCode 
+        }.ToString());
     }
 }
