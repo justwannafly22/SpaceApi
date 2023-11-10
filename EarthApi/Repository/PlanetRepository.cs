@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using PlanetApi.Domain;
+using PlanetApi.Infrastructure.Exceptions;
 using PlanetApi.Infrastructure.Factories;
+using PlanetApi.Infrastructure.Logger;
 using PlanetApi.Repository.Entities;
 using PlanetApi.Repository.Interfaces;
 using System.Data;
@@ -9,6 +11,7 @@ namespace PlanetApi.Repository;
 
 public class PlanetRepository : IPlanetRepository
 {
+    private readonly ILoggerService _logger;
     private readonly IDapperContext _context;
     private readonly IPlanetRepositoryFactory _planetFactory;
 
@@ -19,8 +22,9 @@ public class PlanetRepository : IPlanetRepository
     private const string SP_DeletePlanet = "spDeletePlanet";
     private const string SP_GetPlanetByName = "spGetPlanetByName";
 
-    public PlanetRepository(IDapperContext context, IPlanetRepositoryFactory planetFactory)
+    public PlanetRepository(IDapperContext context, IPlanetRepositoryFactory planetFactory, ILoggerService logger)
     {
+        _logger = logger;
         _context = context;
         _planetFactory = planetFactory;
     }
@@ -52,7 +56,7 @@ public class PlanetRepository : IPlanetRepository
         var planet = _planetFactory.ToEntity(domainModel);
 
         using var connection = _context.CreateConnection();
-        await connection.ExecuteAsync(SP_UpdatePlanet, new
+        var rowsAffected = await connection.ExecuteAsync(SP_UpdatePlanet, new
         {
             Id = id,
             planet.Name,
@@ -61,13 +65,25 @@ public class PlanetRepository : IPlanetRepository
             planet.Air
         }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
 
+        if (rowsAffected == 0)
+        {
+            _logger.LogWarn($"The planet with id: {id} doesn`t exist in the database.");
+            throw new NotFoundException($"The planet with id: {id} doesn`t exist in the database.");
+        }
+
         return _planetFactory.ToDomain(planet);
     }
 
     public async Task DeleteAsync(Guid id)
     {
         using var connection = _context.CreateConnection();
-        await connection.ExecuteAsync(SP_DeletePlanet, id, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        var rowsAffected = await connection.ExecuteAsync(SP_DeletePlanet, id, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+
+        if (rowsAffected == 0)
+        {
+            _logger.LogWarn($"The planet with id: {id} doesn`t exist in the database.");
+            throw new NotFoundException($"The planet with id: {id} doesn`t exist in the database.");
+        }
     }
 
     public async Task<List<PlanetDomainModel>> GetAllAsync()
@@ -75,14 +91,20 @@ public class PlanetRepository : IPlanetRepository
         using var connection = _context.CreateConnection();
         var planets = await connection.QueryAsync<Planet>(SP_GetPlanets, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
 
-        var domainModels = planets.ToList().Select(planet => _planetFactory.ToDomain(planet));
+        var domainModels = planets.ToList().Select(_planetFactory.ToDomain);
         return domainModels.ToList();
     }
 
     public async Task<PlanetDomainModel> GetByIdAsync(Guid id)
     {
         using var connection = _context.CreateConnection();
+
         var planet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanet, id, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        if (planet is null)
+        {
+            _logger.LogWarn($"The planet with id: {id} doesn`t exist in the database.");
+            throw new NotFoundException($"The planet with id: {id} doesn`t exist in the database.");
+        }
 
         return _planetFactory.ToDomain(planet!);
     }

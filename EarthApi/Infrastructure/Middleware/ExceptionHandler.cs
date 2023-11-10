@@ -1,4 +1,5 @@
 ﻿using PlanetApi.Boundary;
+using PlanetApi.Infrastructure.Exceptions;
 using PlanetApi.Infrastructure.Logger;
 using System.Net;
 
@@ -28,6 +29,10 @@ public class ExceptionHandler
         catch (ArgumentException ex)
         {
             await HandleExceptionAsync(httpContext, ex.Message, HttpStatusCode.BadRequest);
+        }
+        catch (NotFoundException ex)
+        {
+            await HandleExceptionAsync(httpContext, ex.Message, HttpStatusCode.NotFound);
         }
         catch (Exception ex)
         {
