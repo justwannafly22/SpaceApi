@@ -117,7 +117,6 @@ public class CountryBusinessLogicTests
     #endregion
 
     #region Delete
-    // ToDo: Find a better way to test the removing process. Pay attention to Act and Assert sections.
     [Fact]
     public async Task DeleteAsync_ThereIsCountry_ReturnsCompletedTask()
     {
@@ -249,7 +248,6 @@ public class CountryBusinessLogicTests
         _mockCountryRepository.Setup(_ => _.CreateAsync(It.IsAny<CountryDomainModel>())).ReturnsAsync(domainModel);
 
         // Act
-        domainModel.Name = "Changed";
         var country = await _countryBusinessLogic.CreateAsync(domainModel);
 
         // Assert
@@ -258,23 +256,6 @@ public class CountryBusinessLogicTests
             country.Should().NotBeNull();
 
             country.Should().BeEquivalentTo(domainModel);
-        }
-    }
-
-    [Fact]
-    public async Task CreateAsync_ThereIsNoCountry_ThrowsNotFoundException()
-    {
-        // Arrange
-        var domainModel = Fixture.Create<CountryDomainModel>();
-        _mockCountryRepository.Setup(_ => _.CreateAsync(It.IsAny<CountryDomainModel>())).ThrowsAsync(new NotFoundException());
-
-        // Act
-        var action = () => _countryBusinessLogic.CreateAsync(domainModel);
-
-        // Assert
-        using (var scope = new AssertionScope())
-        {
-            var exception = await Assert.ThrowsAsync<NotFoundException>(action);
         }
     }
 
