@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using MinimalApi.Boundary.Country.RequestModels;
+using PopulationApi.Boundary.Country.RequestModels;
 
-namespace MinimalApi.Infrastructure.Validators.Country;
+namespace PopulationApi.Infrastructure.Validators.Country;
 
 public class CountryCreateRequestModelValidator : AbstractValidator<CountryCreateRequestModel>
 {

@@ -1,8 +1,8 @@
-﻿using MinimalApi.Domain;
-using MinimalApi.Infrastructure.Logic.Interfaces;
-using MinimalApi.Repository.Interfaces;
+﻿using PopulationApi.Domain;
+using PopulationApi.Infrastructure.Logic.Interfaces;
+using PopulationApi.Repository.Interfaces;
 
-namespace MinimalApi.Infrastructure.Logic;
+namespace PopulationApi.Infrastructure.Logic;
 
 public class CountryBusinessLogic : ICountryBusinessLogic
 {

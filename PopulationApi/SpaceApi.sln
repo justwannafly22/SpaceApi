@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulationApi", "PopulationApi.csproj", "{FF71C43E-A4F6-45A4-A383-76AF99C37B23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopulationApi", "PopulationApi.csproj", "{FF71C43E-A4F6-45A4-A383-76AF99C37B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EarthApi", "..\EarthApi\EarthApi.csproj", "{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanetApi", "..\EarthApi\PlanetApi.csproj", "{21B73DA9-D440-4985-BA40-9CB8CF42F8C9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6B78F5E5-7E9F-4A7D-943C-4B6E8254480A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopulationApi.Test", "..\PopulationApi.Test\PopulationApi.Test.csproj", "{072B1408-6F28-41E9-AD2E-D77EAAA8C243}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopulationApi.Test", "..\PopulationApi.Test\PopulationApi.Test.csproj", "{072B1408-6F28-41E9-AD2E-D77EAAA8C243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetApi.Test", "..\PlanetApi.Test\PlanetApi.Test.csproj", "{C36C430A-DB01-425A-AA26-60B4A889810D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,12 +31,17 @@ Global
 		{072B1408-6F28-41E9-AD2E-D77EAAA8C243}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{072B1408-6F28-41E9-AD2E-D77EAAA8C243}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{072B1408-6F28-41E9-AD2E-D77EAAA8C243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C36C430A-DB01-425A-AA26-60B4A889810D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C36C430A-DB01-425A-AA26-60B4A889810D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C36C430A-DB01-425A-AA26-60B4A889810D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C36C430A-DB01-425A-AA26-60B4A889810D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{072B1408-6F28-41E9-AD2E-D77EAAA8C243} = {6B78F5E5-7E9F-4A7D-943C-4B6E8254480A}
+		{C36C430A-DB01-425A-AA26-60B4A889810D} = {6B78F5E5-7E9F-4A7D-943C-4B6E8254480A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CABE7530-17E0-4085-B39A-F9F435758C9F}

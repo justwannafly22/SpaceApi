@@ -1,4 +1,4 @@
-﻿namespace MinimalApi.Boundary.Country.RequestModels;
+﻿namespace PopulationApi.Boundary.Country.RequestModels;
 
 public class CountryCreateRequestModel
 {

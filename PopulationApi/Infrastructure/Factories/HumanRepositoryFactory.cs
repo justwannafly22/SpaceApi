@@ -1,8 +1,8 @@
-﻿using MinimalApi.Domain;
-using MinimalApi.Infrastructure.Factories.Interfaces;
-using MinimalApi.Repository.Entities;
+﻿using PopulationApi.Domain;
+using PopulationApi.Infrastructure.Factories.Interfaces;
+using PopulationApi.Repository.Entities;
 
-namespace MinimalApi.Infrastructure.Factories;
+namespace PopulationApi.Infrastructure.Factories;
 
 public class HumanRepositoryFactory : IHumanRepositoryFactory
 {

@@ -1,11 +1,11 @@
-﻿using MinimalApi.Infrastructure.Factories;
-using MinimalApi.Infrastructure.Factories.Interfaces;
-using MinimalApi.Infrastructure.Logic;
-using MinimalApi.Infrastructure.Logic.Interfaces;
-using MinimalApi.Repository;
-using MinimalApi.Repository.Interfaces;
+﻿using PopulationApi.Infrastructure.Factories;
+using PopulationApi.Infrastructure.Factories.Interfaces;
+using PopulationApi.Infrastructure.Logic;
+using PopulationApi.Infrastructure.Logic.Interfaces;
+using PopulationApi.Repository;
+using PopulationApi.Repository.Interfaces;
 
-namespace MinimalApi.Infrastructure.Extentions;
+namespace PopulationApi.Infrastructure.Extentions;
 
 public static class ServiceExtensions
 {

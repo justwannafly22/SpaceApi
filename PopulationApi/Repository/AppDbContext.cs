@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MinimalApi.Repository.Entities;
+using PopulationApi.Repository.Entities;
 
-namespace MinimalApi.Repository;
+namespace PopulationApi.Repository;
 
 public class AppDbContext : DbContext
 {

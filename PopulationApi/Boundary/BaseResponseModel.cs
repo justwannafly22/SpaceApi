@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
 
-namespace MinimalApi.Boundary;
+namespace PopulationApi.Boundary;
 
 public class BaseResponseModel
 {

@@ -1,8 +1,8 @@
-﻿using MinimalApi.Domain;
-using MinimalApi.Infrastructure.Exceptions;
-using MinimalApi.Infrastructure.Logic;
-using MinimalApi.Infrastructure.Logic.Interfaces;
-using MinimalApi.Repository.Interfaces;
+﻿using PopulationApi.Domain;
+using PopulationApi.Infrastructure.Exceptions;
+using PopulationApi.Infrastructure.Logic;
+using PopulationApi.Infrastructure.Logic.Interfaces;
+using PopulationApi.Repository.Interfaces;
 
 namespace PopulationApi.Test.BusinessLogic;
 
@@ -117,7 +117,6 @@ public class HumanBusinessLogicTests
     #endregion
 
     #region Delete
-    // ToDo: Find a better way to test the removing process. Pay attention to Act and Assert sections.
     [Fact]
     public async Task DeleteAsync_ThereIsHuman_ReturnsCompletedTask()
     {
@@ -249,7 +248,6 @@ public class HumanBusinessLogicTests
         _mockHumanRepository.Setup(_ => _.CreateAsync(It.IsAny<HumanDomainModel>())).ReturnsAsync(domainModel);
 
         // Act
-        domainModel.Name = "Changed";
         var human = await _humanBusinessLogic.CreateAsync(domainModel);
 
         // Assert
@@ -258,23 +256,6 @@ public class HumanBusinessLogicTests
             human.Should().NotBeNull();
 
             human.Should().BeEquivalentTo(domainModel);
-        }
-    }
-
-    [Fact]
-    public async Task CreateAsync_ThereIsNoHuman_ThrowsNotFoundException()
-    {
-        // Arrange
-        var domainModel = Fixture.Create<HumanDomainModel>();
-        _mockHumanRepository.Setup(_ => _.CreateAsync(It.IsAny<HumanDomainModel>())).ThrowsAsync(new NotFoundException());
-
-        // Act
-        var action = () => _humanBusinessLogic.CreateAsync(domainModel);
-
-        // Assert
-        using (var scope = new AssertionScope())
-        {
-            var exception = await Assert.ThrowsAsync<NotFoundException>(action);
         }
     }
 

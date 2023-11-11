@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MinimalApi.Boundary;
-using MinimalApi.Boundary.Country;
-using MinimalApi.Boundary.Country.RequestModels;
-using MinimalApi.Domain;
-using MinimalApi.Infrastructure.Exceptions;
-using MinimalApi.Infrastructure.Logic.Interfaces;
+using PopulationApi.Boundary;
+using PopulationApi.Boundary.Country;
+using PopulationApi.Boundary.Country.RequestModels;
+using PopulationApi.Domain;
+using PopulationApi.Infrastructure.Exceptions;
+using PopulationApi.Infrastructure.Logic.Interfaces;
 using System.Net;
 
-namespace MinimalApi.Controllers;
+namespace PopulationApi.Controllers;
 
 [ApiController]
 [Route("api/v1/countries")]

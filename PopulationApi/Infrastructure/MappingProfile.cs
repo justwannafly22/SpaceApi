@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using MinimalApi.Boundary.Country;
-using MinimalApi.Boundary.Country.RequestModels;
-using MinimalApi.Boundary.Human;
-using MinimalApi.Boundary.Human.RequestModel;
-using MinimalApi.Domain;
+using PopulationApi.Boundary.Country;
+using PopulationApi.Boundary.Country.RequestModels;
+using PopulationApi.Boundary.Human;
+using PopulationApi.Boundary.Human.RequestModel;
+using PopulationApi.Domain;
 
-namespace MinimalApi.Infrastructure;
+namespace PopulationApi.Infrastructure;
 
 public class MappingProfile : Profile
 {

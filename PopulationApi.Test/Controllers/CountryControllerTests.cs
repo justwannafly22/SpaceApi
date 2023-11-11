@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MinimalApi.Boundary.Country;
-using MinimalApi.Boundary.Country.RequestModels;
-using MinimalApi.Controllers;
-using MinimalApi.Domain;
-using MinimalApi.Infrastructure.Exceptions;
-using MinimalApi.Infrastructure.Logic.Interfaces;
+using PopulationApi.Boundary.Country;
+using PopulationApi.Boundary.Country.RequestModels;
+using PopulationApi.Controllers;
+using PopulationApi.Domain;
+using PopulationApi.Infrastructure.Exceptions;
+using PopulationApi.Infrastructure.Logic.Interfaces;
 using System.Net;
 
 namespace PopulationApi.Test.Controllers;

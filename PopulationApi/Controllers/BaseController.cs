@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace MinimalApi.Controllers;
+namespace PopulationApi.Controllers;
 
 public class BaseController : Controller
 {

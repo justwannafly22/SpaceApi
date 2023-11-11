@@ -1,6 +1,6 @@
-﻿using MinimalApi.Domain;
+﻿using PopulationApi.Domain;
 
-namespace MinimalApi.Infrastructure.Logic.Interfaces;
+namespace PopulationApi.Infrastructure.Logic.Interfaces;
 
 public interface IHumanBusinessLogic
 {

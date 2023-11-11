@@ -1,7 +1,7 @@
-﻿using MinimalApi.Domain;
-using MinimalApi.Repository.Entities;
+﻿using PopulationApi.Domain;
+using PopulationApi.Repository.Entities;
 
-namespace MinimalApi.Infrastructure.Factories.Interfaces;
+namespace PopulationApi.Infrastructure.Factories.Interfaces;
 
 public interface IHumanRepositoryFactory
 {

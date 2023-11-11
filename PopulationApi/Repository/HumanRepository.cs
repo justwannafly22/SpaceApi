@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MinimalApi.Domain;
-using MinimalApi.Infrastructure.Exceptions;
-using MinimalApi.Infrastructure.Factories.Interfaces;
-using MinimalApi.Repository.Entities;
-using MinimalApi.Repository.Interfaces;
+using PopulationApi.Domain;
+using PopulationApi.Infrastructure.Exceptions;
+using PopulationApi.Infrastructure.Factories.Interfaces;
+using PopulationApi.Repository.Entities;
+using PopulationApi.Repository.Interfaces;
 using Serilog;
 using System.Linq.Expressions;
 
-namespace MinimalApi.Repository;
+namespace PopulationApi.Repository;
 
 public class HumanRepository : IHumanRepository
 {

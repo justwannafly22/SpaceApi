@@ -1,4 +1,4 @@
-﻿namespace MinimalApi.Domain;
+﻿namespace PopulationApi.Domain;
 
 public class CountryDomainModel
 {
