@@ -1,0 +1,88 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5160"
+  },
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/planets",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5166
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/planets",
+      "UpstreamHttpMethod": [ "POST", "GET" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/planets/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhosts",
+          "Port": 5166
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/planets/{id}",
+      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/people",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5102
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/people",
+      "UpstreamHttpMethod": [ "POST", "GET" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/people/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5102
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/people/{id}",
+      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/countries",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5102
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/countries",
+      "UpstreamHttpMethod": [ "POST", "GET" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/countries/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5102
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/countries/{id}",
+      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ]
+    }
+  ]
+}
