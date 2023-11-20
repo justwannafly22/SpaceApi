@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanetApi.Test", "..\Planet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayApi", "..\GatewayApi\GatewayApi.csproj", "{C144172C-E8FD-4027-AE7F-BD9B856A337B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityApi", "..\IdentityApi\IdentityApi.csproj", "{4F11BE68-20B8-4B27-A700-86A003E47CC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{C144172C-E8FD-4027-AE7F-BD9B856A337B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C144172C-E8FD-4027-AE7F-BD9B856A337B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C144172C-E8FD-4027-AE7F-BD9B856A337B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F11BE68-20B8-4B27-A700-86A003E47CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F11BE68-20B8-4B27-A700-86A003E47CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F11BE68-20B8-4B27-A700-86A003E47CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F11BE68-20B8-4B27-A700-86A003E47CC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
