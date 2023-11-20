@@ -11,7 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6B78F5E5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PopulationApi.Test", "..\PopulationApi.Test\PopulationApi.Test.csproj", "{072B1408-6F28-41E9-AD2E-D77EAAA8C243}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetApi.Test", "..\PlanetApi.Test\PlanetApi.Test.csproj", "{C36C430A-DB01-425A-AA26-60B4A889810D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanetApi.Test", "..\PlanetApi.Test\PlanetApi.Test.csproj", "{C36C430A-DB01-425A-AA26-60B4A889810D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayApi", "..\GatewayApi\GatewayApi.csproj", "{C144172C-E8FD-4027-AE7F-BD9B856A337B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{C36C430A-DB01-425A-AA26-60B4A889810D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C36C430A-DB01-425A-AA26-60B4A889810D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C36C430A-DB01-425A-AA26-60B4A889810D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C144172C-E8FD-4027-AE7F-BD9B856A337B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C144172C-E8FD-4027-AE7F-BD9B856A337B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C144172C-E8FD-4027-AE7F-BD9B856A337B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C144172C-E8FD-4027-AE7F-BD9B856A337B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
