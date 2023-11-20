@@ -1,3 +1,4 @@
+using IdentityApi.Infrastructure.Middleware;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,8 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
+
+    app.UseMiddleware<ExceptionHandler>();
 
     app.Run();
 }
