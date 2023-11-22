@@ -16,7 +16,7 @@ public class PlanetBusinessLogic : IPlanetBusinessLogic
     {
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
-        return await _repository.CreateAsync(model).ConfigureAwait(false);
+        return await _repository.CreateAsync(model);
     }
 
     public async Task<PlanetDomainModel> UpdateAsync(Guid id, PlanetDomainModel model)
@@ -24,21 +24,21 @@ public class PlanetBusinessLogic : IPlanetBusinessLogic
         ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
-        return await _repository.UpdateAsync(id, model).ConfigureAwait(false);
+        return await _repository.UpdateAsync(id, model);
     }
 
     public async Task DeleteAsync(Guid id)
     {
-        await _repository.DeleteAsync(id).ConfigureAwait(false);
+        await _repository.DeleteAsync(id);
     }
 
     public async Task<PlanetDomainModel> GetByIdAsync(Guid id)
     {
-        return await _repository.GetByIdAsync(id).ConfigureAwait(false);
+        return await _repository.GetByIdAsync(id);
     }
 
     public async Task<List<PlanetDomainModel>> GetAllPlanetsAsync()
     {
-        return await _repository.GetAllAsync().ConfigureAwait(false);
+        return await _repository.GetAllAsync();
     }
 }

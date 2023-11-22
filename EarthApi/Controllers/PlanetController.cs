@@ -27,7 +27,7 @@ public class PlanetController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var response = _mapper.Map<List<PlanetResponseModel>>(await _planetBusinessLogic.GetAllPlanetsAsync().ConfigureAwait(false));
+        var response = _mapper.Map<List<PlanetResponseModel>>(await _planetBusinessLogic.GetAllPlanetsAsync());
 
         return Ok(response);
     }
@@ -38,7 +38,7 @@ public class PlanetController : BaseController
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] Guid id)
     {
-        var planet = await _planetBusinessLogic.GetByIdAsync(id).ConfigureAwait(false);
+        var planet = await _planetBusinessLogic.GetByIdAsync(id);
 
         return Ok(_mapper.Map<PlanetResponseModel>(planet));
     }
@@ -54,7 +54,7 @@ public class PlanetController : BaseController
             return BadRequest(new BaseResponseModel(GetErrorMessage(ModelState), HttpStatusCode.BadRequest));
         }
 
-        var addedPlanet = await _planetBusinessLogic.CreateAsync(_mapper.Map<PlanetDomainModel>(model)).ConfigureAwait(false);
+        var addedPlanet = await _planetBusinessLogic.CreateAsync(_mapper.Map<PlanetDomainModel>(model));
 
         return CreatedAtAction(nameof(Create), _mapper.Map<PlanetResponseModel>(addedPlanet));
     }
@@ -70,7 +70,7 @@ public class PlanetController : BaseController
             return BadRequest(new BaseResponseModel(GetErrorMessage(ModelState), HttpStatusCode.BadRequest));
         }
 
-        _ = await _planetBusinessLogic.UpdateAsync(id, _mapper.Map<PlanetDomainModel>(model)).ConfigureAwait(false);
+        _ = await _planetBusinessLogic.UpdateAsync(id, _mapper.Map<PlanetDomainModel>(model));
 
         return NoContent();
     }
@@ -81,7 +81,7 @@ public class PlanetController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
-        await _planetBusinessLogic.DeleteAsync(id).ConfigureAwait(false);
+        await _planetBusinessLogic.DeleteAsync(id);
 
         return NoContent();
     }

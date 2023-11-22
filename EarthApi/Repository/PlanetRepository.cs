@@ -42,7 +42,7 @@ public class PlanetRepository : IPlanetRepository
             planet.Location,
             planet.Age,
             planet.Air
-        }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }, commandType: CommandType.StoredProcedure);
 
         if (affectedRows == 0)
         {
@@ -50,7 +50,7 @@ public class PlanetRepository : IPlanetRepository
             throw new Exception("Planet wasn`t created.");
         }
 
-        var insertedPlanet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanetByName, new { planet.Name }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        var insertedPlanet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanetByName, new { planet.Name }, commandType: CommandType.StoredProcedure);
 
         _logger.LogInfo($"The planet: {planet.Name} created successfully.");
 
@@ -71,7 +71,7 @@ public class PlanetRepository : IPlanetRepository
             planet.Location,
             planet.Age,
             planet.Air
-        }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        }, commandType: CommandType.StoredProcedure);
 
         if (rowsAffected == 0)
         {
@@ -85,7 +85,7 @@ public class PlanetRepository : IPlanetRepository
     public async Task DeleteAsync(Guid id)
     {
         using var connection = _context.CreateConnection();
-        var rowsAffected = await connection.ExecuteAsync(SP_DeletePlanet, new { id }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        var rowsAffected = await connection.ExecuteAsync(SP_DeletePlanet, new { id }, commandType: CommandType.StoredProcedure);
 
         if (rowsAffected == 0)
         {
@@ -97,7 +97,7 @@ public class PlanetRepository : IPlanetRepository
     public async Task<List<PlanetDomainModel>> GetAllAsync()
     {
         using var connection = _context.CreateConnection();
-        var planets = await connection.QueryAsync<Planet>(SP_GetPlanets, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        var planets = await connection.QueryAsync<Planet>(SP_GetPlanets, commandType: CommandType.StoredProcedure);
 
         var domainModels = planets.ToList().Select(_planetFactory.ToDomain);
         return domainModels.ToList();
@@ -107,7 +107,7 @@ public class PlanetRepository : IPlanetRepository
     {
         using var connection = _context.CreateConnection();
 
-        var planet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanet, new { id }, commandType: CommandType.StoredProcedure).ConfigureAwait(false);
+        var planet = await connection.QuerySingleOrDefaultAsync<Planet>(SP_GetPlanet, new { id }, commandType: CommandType.StoredProcedure);
         if (planet is null)
         {
             _logger.LogWarn($"The planet with id: {id} doesn`t exist in the database.");

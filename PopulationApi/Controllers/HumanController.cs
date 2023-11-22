@@ -30,7 +30,7 @@ public class HumanController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var response = _mapper.Map<List<HumanResponseModel>>(await _humanBusinessLogic.GetAllPeopleAsync().ConfigureAwait(false));
+        var response = _mapper.Map<List<HumanResponseModel>>(await _humanBusinessLogic.GetAllPeopleAsync());
 
         return Ok(response);
     }
@@ -43,7 +43,7 @@ public class HumanController : BaseController
     {
         try
         {
-            var human = await _humanBusinessLogic.GetByIdAsync(id).ConfigureAwait(false);
+            var human = await _humanBusinessLogic.GetByIdAsync(id);
 
             return Ok(_mapper.Map<HumanResponseModel>(human));
         }
@@ -64,7 +64,7 @@ public class HumanController : BaseController
             return BadRequest(new BaseResponseModel(GetErrorMessage(ModelState), HttpStatusCode.BadRequest));
         }
 
-        var addedHuman = await _humanBusinessLogic.CreateAsync(_mapper.Map<HumanDomainModel>(model)).ConfigureAwait(false);
+        var addedHuman = await _humanBusinessLogic.CreateAsync(_mapper.Map<HumanDomainModel>(model));
 
         return CreatedAtAction(nameof(Create), _mapper.Map<HumanResponseModel>(addedHuman));
     }
@@ -82,7 +82,7 @@ public class HumanController : BaseController
                 return BadRequest(new BaseResponseModel(GetErrorMessage(ModelState), HttpStatusCode.BadRequest));
             }
 
-            _ = await _humanBusinessLogic.UpdateAsync(id, _mapper.Map<HumanDomainModel>(model)).ConfigureAwait(false);
+            _ = await _humanBusinessLogic.UpdateAsync(id, _mapper.Map<HumanDomainModel>(model));
 
             return NoContent();
         }
@@ -100,7 +100,7 @@ public class HumanController : BaseController
     {
         try
         {
-            await _humanBusinessLogic.DeleteAsync(id).ConfigureAwait(false);
+            await _humanBusinessLogic.DeleteAsync(id);
 
             return NoContent();
         }

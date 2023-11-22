@@ -25,8 +25,8 @@ public class CountryRepository : ICountryRepository
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
         var entity = _factory.ToEntity(model);
-        await _context.Countries.AddAsync(entity).ConfigureAwait(false);
-        await _context.SaveChangesAsync().ConfigureAwait(false);
+        await _context.Countries.AddAsync(entity);
+        await _context.SaveChangesAsync();
 
         Log.Information($"The country: {entity} was successfully created.");
 
@@ -37,7 +37,7 @@ public class CountryRepository : ICountryRepository
     {
         ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
 
-        var entity = await GetCountryByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync().ConfigureAwait(false);
+        var entity = await GetCountryByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync();
         if (entity is null)
         {
             Log.Warning($"The country with id {id} doesn`t exist in the database.");
@@ -46,14 +46,14 @@ public class CountryRepository : ICountryRepository
 
         _context.Remove(entity!);
 
-        await _context.SaveChangesAsync().ConfigureAwait(false);
+        await _context.SaveChangesAsync();
 
         Log.Information($"The country: {entity} was successfully deleted.");
     }
 
     public async Task<List<CountryDomainModel>> GetAllAsync()
     {
-        var entities = await GetAllCountries().Select(e => _factory.ToDomain(e)).AsNoTracking().ToListAsync().ConfigureAwait(false);
+        var entities = await GetAllCountries().Select(e => _factory.ToDomain(e)).AsNoTracking().ToListAsync();
 
         Log.Information($"The country table was triggered.");
 
@@ -64,7 +64,7 @@ public class CountryRepository : ICountryRepository
     {
         ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
 
-        var entity = await GetCountryByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync().ConfigureAwait(false);
+        var entity = await GetCountryByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync();
         if (entity is null)
         {
             Log.Warning($"The country with id {id} doesn`t exist in the database.");
@@ -79,7 +79,7 @@ public class CountryRepository : ICountryRepository
         ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
-        var entity = await GetCountryByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync().ConfigureAwait(false);
+        var entity = await GetCountryByExpression(e => e.Id.Equals(id)).SingleOrDefaultAsync();
         if (entity is null)
         {
             Log.Warning($"The country with id {id} doesn`t exist in the database.");
@@ -90,7 +90,7 @@ public class CountryRepository : ICountryRepository
         entity.Square = model.Square;
         entity.Population = model.Population;
 
-        await _context.SaveChangesAsync().ConfigureAwait(false);
+        await _context.SaveChangesAsync();
 
         Log.Information($"The country: {entity} was successfully updated.");
 

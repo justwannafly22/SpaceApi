@@ -30,7 +30,7 @@ public class CountryController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var response = _mapper.Map<List<CountryResponseModel>>(await _countryBusinessLogic.GetAllCountriesAsync().ConfigureAwait(false));
+        var response = _mapper.Map<List<CountryResponseModel>>(await _countryBusinessLogic.GetAllCountriesAsync());
 
         return Ok(response);
     }
@@ -43,7 +43,7 @@ public class CountryController : BaseController
     {
         try
         {
-            var country = await _countryBusinessLogic.GetByIdAsync(id).ConfigureAwait(false);
+            var country = await _countryBusinessLogic.GetByIdAsync(id);
 
             return Ok(_mapper.Map<CountryResponseModel>(country));
         }
@@ -64,7 +64,7 @@ public class CountryController : BaseController
             return BadRequest(new BaseResponseModel(GetErrorMessage(ModelState), HttpStatusCode.BadRequest));
         }
 
-        var addedCountry = await _countryBusinessLogic.CreateAsync(_mapper.Map<CountryDomainModel>(model)).ConfigureAwait(false);
+        var addedCountry = await _countryBusinessLogic.CreateAsync(_mapper.Map<CountryDomainModel>(model));
 
         return CreatedAtAction(nameof(Create), _mapper.Map<CountryResponseModel>(addedCountry));
     }
@@ -82,7 +82,7 @@ public class CountryController : BaseController
                 return BadRequest(new BaseResponseModel(GetErrorMessage(ModelState), HttpStatusCode.BadRequest));
             }
 
-            _ = await _countryBusinessLogic.UpdateAsync(id, _mapper.Map<CountryDomainModel>(model)).ConfigureAwait(false);
+            _ = await _countryBusinessLogic.UpdateAsync(id, _mapper.Map<CountryDomainModel>(model));
 
             return NoContent();
         }
@@ -100,7 +100,7 @@ public class CountryController : BaseController
     {
         try
         {
-            await _countryBusinessLogic.DeleteAsync(id).ConfigureAwait(false);
+            await _countryBusinessLogic.DeleteAsync(id);
 
             return NoContent();
         }

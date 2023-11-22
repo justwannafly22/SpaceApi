@@ -17,7 +17,7 @@ public class CountryBusinessLogic : ICountryBusinessLogic
     {
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
-        return await _repository.CreateAsync(model).ConfigureAwait(false);
+        return await _repository.CreateAsync(model);
     }
     
     public async Task<CountryDomainModel> UpdateAsync(Guid id, CountryDomainModel model)
@@ -25,21 +25,21 @@ public class CountryBusinessLogic : ICountryBusinessLogic
         ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
-        return await _repository.UpdateAsync(id, model).ConfigureAwait(false);
+        return await _repository.UpdateAsync(id, model);
     }
     
     public async Task DeleteAsync(Guid id)
     {
-        await _repository.DeleteAsync(id).ConfigureAwait(false);
+        await _repository.DeleteAsync(id);
     }
 
     public async Task<CountryDomainModel> GetByIdAsync(Guid id)
     {
-        return await _repository.GetByIdAsync(id).ConfigureAwait(false);
+        return await _repository.GetByIdAsync(id);
     }
 
     public async Task<List<CountryDomainModel>> GetAllCountriesAsync()
     {
-        return await _repository.GetAllAsync().ConfigureAwait(false);
+        return await _repository.GetAllAsync();
     }
 }
