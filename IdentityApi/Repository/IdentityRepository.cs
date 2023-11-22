@@ -1,5 +1,4 @@
-﻿using IdentityApi.Infrastructure.Exceptions;
-using IdentityApi.Repository.Entities;
+﻿using IdentityApi.Repository.Entities;
 using IdentityApi.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
@@ -22,8 +21,7 @@ public class IdentityRepository : IIdentityRepository
         var user = await _userManager.FindByNameAsync(username);
         if (user is null)
         {
-            Log.Warning($"The user with username {username} doesn`t exist in the database.");
-            throw new NotFoundException($"The user with username {username} doesn`t exist in the database.");
+            Log.Information($"The user with username {username} doesn`t exist in the database.");
         }
 
         return user;
@@ -41,5 +39,12 @@ public class IdentityRepository : IIdentityRepository
         return roles.ToList();
     }
 
-
+    public async Task CreateAsync(ApplicationUser user, string password)
+    {
+        var result = await _userManager.CreateAsync(user, password);
+        if (!result.Succeeded)
+        {
+            throw new Exception($"The user: {user.UserName} wasn`t created. {result}");
+        }
+    }
 }

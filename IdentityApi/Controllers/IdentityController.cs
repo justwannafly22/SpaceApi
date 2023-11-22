@@ -22,7 +22,7 @@ public class IdentityController : BaseController
     }
 
     [Route("login")]
-    [HttpPost("login")]
+    [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginRequestModel model)
     {
         if (!ModelState.IsValid)
@@ -35,6 +35,17 @@ public class IdentityController : BaseController
         return Ok(token);
     }
 
+    [Route("register")]
+    [HttpPost]
+    public async Task<IActionResult> Register([FromBody] RegisterRequestModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(new BaseResponseModel(GetErrorMessage(ModelState), HttpStatusCode.BadRequest));
+        }
 
+        await _identityLogic.RegisterAsync(_mapper.Map<RegisterDomainModel>(model));
 
+        return Ok("User successully created");
+    }
 }

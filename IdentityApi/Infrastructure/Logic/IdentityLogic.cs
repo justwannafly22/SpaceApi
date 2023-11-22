@@ -23,7 +23,7 @@ public class IdentityLogic : IIdentityLogic
 
     public async Task<TokenDomainModel> LoginAsync(LoginDomainModel domainModel)
     {
-        var user = await _identityRepository.FindByNameAsync(domainModel.Username);
+        var user = await _identityRepository.FindByNameAsync(domainModel.Username) ?? throw new NotFoundException($"The user with username {domainModel.Username} doesn`t exist in the database.");
         if (!await _identityRepository.CheckPasswordAsync(user, domainModel.Password))
         {
             Log.Error($"The password for user: {user.UserName} is incorrect.");
@@ -72,5 +72,20 @@ public class IdentityLogic : IIdentityLogic
         return claims;
     }
 
+    public async Task RegisterAsync(RegisterDomainModel domainModel)
+    {
+        var user = await _identityRepository.FindByNameAsync(domainModel.Username);
+        if (user is not null)
+        {
+            throw new Exception($"User: {user.UserName} already exists.");
+        }
 
+        ApplicationUser newUser = new()
+        {
+            Email = domainModel.Email,
+            SecurityStamp = Guid.NewGuid().ToString(),
+            UserName = domainModel.Username
+        };
+        await _identityRepository.CreateAsync(newUser, domainModel.Password);
+    }
 }
