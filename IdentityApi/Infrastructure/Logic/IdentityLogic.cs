@@ -3,7 +3,6 @@ using IdentityApi.Infrastructure.Exceptions;
 using IdentityApi.Repository.Entities;
 using IdentityApi.Repository.Interfaces;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
