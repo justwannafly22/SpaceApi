@@ -16,6 +16,9 @@
       "UpstreamHttpMethod": [ "POST", "GET" ],
       "FileCacheOptions": {
         "TtlSeconds": 10
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
       }
     },
     {
@@ -28,7 +31,10 @@
         }
       ],
       "UpstreamPathTemplate": "/gateway/planets/{id}",
-      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/people",
@@ -43,6 +49,9 @@
       "UpstreamHttpMethod": [ "POST", "GET" ],
       "FileCacheOptions": {
         "TtlSeconds": 10
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
       }
     },
     {
@@ -55,7 +64,10 @@
         }
       ],
       "UpstreamPathTemplate": "/gateway/people/{id}",
-      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/v1/countries",
@@ -70,6 +82,9 @@
       "UpstreamHttpMethod": [ "POST", "GET" ],
       "FileCacheOptions": {
         "TtlSeconds": 10
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
       }
     },
     {
@@ -82,7 +97,25 @@
         }
       ],
       "UpstreamPathTemplate": "/gateway/countries/{id}",
-      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ]
+      "UpstreamHttpMethod": [ "PUT", "GET", "DELETE" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/identity",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5288
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/identity",
+      "UpstreamHttpMethod": [ "POST" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
     }
   ]
 }

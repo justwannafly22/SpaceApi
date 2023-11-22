@@ -8,12 +8,10 @@ namespace IdentityApi.Repository;
 public class IdentityRepository : IIdentityRepository
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public IdentityRepository(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public IdentityRepository(UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
-        _roleManager = roleManager;
     }
 
     public async Task<ApplicationUser> FindByNameAsync(string username)
