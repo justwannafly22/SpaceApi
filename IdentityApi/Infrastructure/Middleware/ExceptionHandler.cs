@@ -1,4 +1,5 @@
 ﻿using IdentityApi.Boundary;
+using IdentityApi.Infrastructure.Exceptions;
 using Serilog;
 using System.Net;
 
@@ -26,6 +27,14 @@ public class ExceptionHandler
         catch (ArgumentException ex)
         {
             await HandleExceptionAsync(httpContext, ex.Message, HttpStatusCode.BadRequest);
+        }
+        catch (NotFoundException ex)
+        {
+            await HandleExceptionAsync(httpContext, ex.Message, HttpStatusCode.NotFound);
+        }
+        catch (UnauthorizedException ex)
+        {
+            await HandleExceptionAsync(httpContext, ex.Message, HttpStatusCode.Unauthorized);
         }
         catch (Exception ex)
         {
