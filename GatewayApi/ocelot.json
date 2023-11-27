@@ -103,7 +103,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/v1/identity",
+      "DownstreamPathTemplate": "/api/v1/identity/login",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -111,7 +111,22 @@
           "Port": 5288
         }
       ],
-      "UpstreamPathTemplate": "/gateway/identity",
+      "UpstreamPathTemplate": "/gateway/identity/login",
+      "UpstreamHttpMethod": [ "POST" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/identity/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5288
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/identity/register",
       "UpstreamHttpMethod": [ "POST" ],
       "FileCacheOptions": {
         "TtlSeconds": 10

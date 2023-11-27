@@ -2,6 +2,7 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Cache.CacheManager;
 using Serilog;
+using GatewayApi.Infrastructure;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -17,6 +18,8 @@ try
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    builder.Services.ConfigureJwt(builder.Configuration);
 
     builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
     builder.Services.AddOcelot(builder.Configuration)
