@@ -16,6 +16,18 @@ try
     Log.Information("Starting web application");
 
     builder.Host.UseSerilog();
+
+    var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(policy =>
+        {
+            policy.WithOrigins(allowedOrigins!)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+        });
+    });
+
     builder.Services.AddControllers();
     builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -27,7 +39,7 @@ try
 
     builder.Services.ConfigureLogic();
     builder.Services.ConfigureRepositories();
-    builder.Services.ConfigureJwt(builder.Configuration);
+    builder.Services.ConfigureSql(builder.Configuration);
 
     var app = builder.Build();
 
@@ -38,6 +50,10 @@ try
     }
 
     app.UseHttpsRedirection();
+
+    app.UseRouting();
+
+    app.UseCors();
 
     app.UseAuthorization();
 

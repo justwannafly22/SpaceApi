@@ -21,32 +21,10 @@ public static class ServiceExtensions
         services.AddScoped<IIdentityRepository, IdentityRepository>();
     }
 
-    public static void ConfigureJwt(this IServiceCollection services, IConfiguration configuration)
+    public static void ConfigureSql(this IServiceCollection services, IConfiguration configuration)
     {
-        string secret = Environment.GetEnvironmentVariable("ApiSecret")!;
-
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
-
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.SaveToken = true;
-            options.RequireHttpsMetadata = false;
-            options.TokenValidationParameters = new TokenValidationParameters()
-            {
-                ValidateIssuer = true,
-                ValidIssuer = configuration["Jwt:ValidIssuer"],
-                ValidateAudience = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
-            };
-        });
     }
 }
