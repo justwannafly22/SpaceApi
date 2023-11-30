@@ -6,6 +6,7 @@ public class Country
     public string Name {  get; set; }
     public int Population { get; set; }
     public int Square { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public Guid PlanetId { get; set; }
     public List<Human>? People {  get; set; }
