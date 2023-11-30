@@ -1,3 +1,7 @@
 ﻿namespace Models;
 
-public record PlanetCreated (Guid Id, DateTime Created);
+public class PlanetCreated
+{
+    public Guid Id { get; set; }
+    public DateTime CreatedAt { get; set; }
+}

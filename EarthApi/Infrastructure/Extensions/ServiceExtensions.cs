@@ -1,4 +1,5 @@
-﻿using PlanetApi.Infrastructure.Factories;
+﻿using MassTransit;
+using PlanetApi.Infrastructure.Factories;
 using PlanetApi.Infrastructure.Logic;
 using PlanetApi.Repository;
 using PlanetApi.Repository.Interfaces;
@@ -21,5 +22,24 @@ public static class ServiceExtensions
     public static void ConfigureLogic(this IServiceCollection services)
     {
         services.AddScoped<IPlanetBusinessLogic, PlanetBusinessLogic>();
+    }
+
+    public static void ConfigureMassTransit(this IServiceCollection services)
+    {
+        services.AddMassTransit(_ =>
+        {
+            _.SetKebabCaseEndpointNameFormatter();
+
+            _.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host("localhost", "/", h =>
+                {
+                    h.Username("guest");
+                    h.Password("guest");
+                });
+
+                cfg.ConfigureEndpoints(context);
+            });
+        });
     }
 }

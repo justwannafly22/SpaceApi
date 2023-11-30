@@ -1,4 +1,5 @@
-﻿using PopulationApi.Infrastructure.Factories;
+﻿using MassTransit;
+using PopulationApi.Infrastructure.Factories;
 using PopulationApi.Infrastructure.Factories.Interfaces;
 using PopulationApi.Infrastructure.Logic;
 using PopulationApi.Infrastructure.Logic.Interfaces;
@@ -25,5 +26,25 @@ public static class ServiceExtensions
     {
         services.AddScoped<IHumanBusinessLogic, HumanBusinessLogic>();
         services.AddScoped<ICountryBusinessLogic, CountryBusinessLogic>();
+    }
+
+    public static void ConfigureMassTransit(this IServiceCollection services)
+    {
+        services.AddMassTransit(_ =>
+        {
+            _.SetKebabCaseEndpointNameFormatter();
+
+            var assembly = typeof(Program).Assembly;
+            _.AddConsumers(assembly);
+            _.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host("localhost", "/", h =>
+                {
+                    h.Username("guest");
+                    h.Password("guest");
+                });
+                cfg.ConfigureEndpoints(context);
+            });
+        });
     }
 }

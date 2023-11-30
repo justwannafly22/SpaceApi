@@ -29,6 +29,8 @@ try
     builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
 
+    builder.Services.ConfigureMassTransit();
+
     builder.Services.ConfigureLogic();
     builder.Services.ConfigureFactories();
     builder.Services.ConfigureRepositories();

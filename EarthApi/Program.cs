@@ -25,6 +25,8 @@ try
 
     builder.Services.AddSingleton<ILoggerService, LoggerService>();
 
+    builder.Services.ConfigureMassTransit();
+
     builder.Services.ConfigureLogic();
     builder.Services.ConfigureFactories();
     builder.Services.ConfigureRepositories();
