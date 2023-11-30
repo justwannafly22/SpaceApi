@@ -31,8 +31,6 @@ public class PlanetBusinessLogic : IPlanetBusinessLogic
             planet.Id, DateTime.Now
         });
 
-        _logger.LogInfo($"Planet with id: {planet.Id} just created.");
-
         return planet;
     }
 

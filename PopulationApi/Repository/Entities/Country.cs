@@ -7,5 +7,6 @@ public class Country
     public int Population { get; set; }
     public int Square { get; set; }
 
+    public Guid PlanetId { get; set; }
     public List<Human>? People {  get; set; }
 }

@@ -6,4 +6,5 @@ public class CountryDomainModel
     public string Name { get; set; }
     public int Population { get; set; }
     public int Square { get; set; }
+    public Guid PlanetId { get; set; }
 }
