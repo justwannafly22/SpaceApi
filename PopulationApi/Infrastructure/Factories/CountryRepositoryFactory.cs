@@ -15,7 +15,8 @@ public class CountryRepositoryFactory : ICountryRepositoryFactory
             Id = country.Id,
             Name = country.Name,
             Population = country.Population,
-            Square = country.Square
+            Square = country.Square,
+            PlanetId = country.PlanetId
         };
     }
 
@@ -28,7 +29,8 @@ public class CountryRepositoryFactory : ICountryRepositoryFactory
             Id = domain.Id,
             Name = domain.Name,
             Population = domain.Population,
-            Square = domain.Square
+            Square = domain.Square,
+            PlanetId = domain.PlanetId
         };
     }
 }

@@ -33,6 +33,19 @@ public class HumanRepository : IHumanRepository
         return _factory.ToDomain(entity);
     }
 
+    public async Task<List<HumanDomainModel>> CreateRangeAsync(List<HumanDomainModel> models)
+    {
+        ArgumentNullException.ThrowIfNull(models, nameof(models));
+
+        var entities = models.Select(_factory.ToEntity);
+        await _context.People.AddRangeAsync(entities);
+        await _context.SaveChangesAsync();
+
+        Log.Information($"Amount of people: {entities.Count()} were successfully created.");
+
+        return entities.Select(_factory.ToDomain).ToList();
+    }
+
     public async Task DeleteAsync(Guid? id)
     {
         ArgumentException.ThrowIfNullOrEmpty(id.ToString(), nameof(id));

@@ -43,38 +43,28 @@ public class PlanetCreatedConsumer : IConsumer<PlanetCreated>
 
     private async Task<List<HumanDomainModel>> CreatePeopleAsync (Guid countryId)
     {
-        var populationAmount = 3;//random.Next(0, 500);
-        var people = new List<HumanDomainModel>(populationAmount);
+        var populationAmount = random.Next(0, 500);
         
-        var tasks = new List<Task>(populationAmount);
+        var people = new List<HumanDomainModel>(populationAmount);
         while (people.Count < populationAmount)
         {
-            async Task Task()
-            {
-                var human = await CreateHumanAsync(countryId);
-                people!.Add(human);
-            }
-
-            tasks.Add(Task());
+            people.Add(CreateHuman(countryId));
         }
 
-        await Task.WhenAll(tasks);
-
-        return people;
+        return await _humanRepository.CreateRangeAsync(people);
     }
 
-    private async Task<HumanDomainModel> CreateHumanAsync(Guid countryId)
+    private HumanDomainModel CreateHuman(Guid countryId)
     {
-        var gender = (random.Next(0, 100) / 2) > 50 ? "Male" : "Female";
-        var human = new HumanDomainModel
+        var age = random.Next(0, 70);
+        var gender = age > 50 ? "Male" : "Female";
+        return new HumanDomainModel
         {
-            Age = random.Next(0, 70),
+            Age = age,
             Gender = gender,
             Name = RandomString.GetString(Types.ALPHABET_UPPERCASE, 10),
             Surname = RandomString.GetString(Types.ALPHABET_UPPERCASE, 10),
             CountryId = countryId
         };
-
-        return await _humanRepository.CreateAsync(human);
     }
 }

@@ -1,5 +1,7 @@
-﻿using PlanetApi.Domain;
+﻿using MassTransit;
+using PlanetApi.Domain;
 using PlanetApi.Infrastructure.Exceptions;
+using PlanetApi.Infrastructure.Logger;
 using PlanetApi.Infrastructure.Logic;
 using PlanetApi.Repository.Interfaces;
 
@@ -9,6 +11,8 @@ public class PlanetBusinessLogicTests
 {
     private readonly IPlanetBusinessLogic _planetBusinessLogic;
     private readonly Mock<IPlanetRepository> _mockPlanetRepository;
+    private readonly Mock<IPublishEndpoint> _mockPublishEndpoint;
+    private readonly Mock<ILoggerService> _mockLoggerService;
     private static readonly Fixture Fixture = new();
     private readonly Guid Id = Guid.NewGuid();
     private const int _planetCount = 5;
@@ -16,7 +20,9 @@ public class PlanetBusinessLogicTests
     public PlanetBusinessLogicTests()
     {
         _mockPlanetRepository = new Mock<IPlanetRepository>();
-        _planetBusinessLogic = new PlanetBusinessLogic(_mockPlanetRepository.Object);
+        _mockPublishEndpoint = new Mock<IPublishEndpoint>();
+        _mockLoggerService = new Mock<ILoggerService>();
+        _planetBusinessLogic = new PlanetBusinessLogic(_mockPlanetRepository.Object, _mockPublishEndpoint.Object, _mockLoggerService.Object);
     }
 
     private static List<PlanetDomainModel> TestPlanets()
